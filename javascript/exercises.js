@@ -16,7 +16,14 @@ export function change(amount) {
 }
 
 // Write your first then lower case function here
-
+export function firstThenLowerCase(strings, predicate) {
+  for (const str of strings) {
+    if (str?.toString() && predicate(str)) {
+      return str.toLowerCase()
+    }
+  }
+  return undefined
+}
 // Write your powers generator here
 
 // Write your say function here
