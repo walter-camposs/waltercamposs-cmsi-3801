@@ -60,5 +60,25 @@ export function say(word) {
   return addToSentence
 }
 // Write your line count function here
+async function meaningfulLineCount(filename) {
+  let fileHandle
+  try {
+    fileHandle = await open(filename, "r")
+    const data = await fileHandle.readFile("utf8")
+    const lines = data.split("\n")
+    const meaningfulLines = lines.filter((line) => {
+      const trimmedLine = line.trim()
+      return trimmedLine.length > 0 && !trimmedLine.startsWith("#")
+    })
+    return meaningfulLines.length
+  } catch (error) {
+    throw new Error(`Error reading file: ${error.message}`)
+  } finally {
+    if (fileHandle) {
+      await fileHandle.close()
+    }
+  }
+}
 
+export { meaningfulLineCount }
 // Write your Quaternion class here
