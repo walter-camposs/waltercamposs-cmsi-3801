@@ -25,11 +25,26 @@ export function firstThenLowerCase(strings, predicate) {
   return undefined
 }
 // Write your powers generator here
+export function powersGenerator({ ofBase: base, upTo: limit }) {
+  let value = 1
+  return {
+    [Symbol.iterator]() {
+      return this
+    },
+    next() {
+      if (value > limit) {
+        return { value: undefined, done: true }
+      }
+      const currentValue = value
+      value *= base
+      return { value: currentValue, done: false }
+    },
+  }
+}
 
 // Write your say function here
 export function say(word) {
   let sentence = []
-
   function addToSentence(nextWord) {
     if (nextWord === undefined) {
       return sentence.join(" ")
@@ -38,11 +53,9 @@ export function say(word) {
       return addToSentence
     }
   }
-
   if (word === undefined) {
     return addToSentence()
   }
-
   sentence.push(word)
   return addToSentence
 }
