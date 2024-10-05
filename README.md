@@ -15,19 +15,19 @@ Created 5 functions for 5 differnent problems.
 ### Java
 
 ```
-javac *.java && java ExercisesTest
+Created 5 functions for 5 differnent problems.
 ```
 
 ### Kotlin
 
 ```
-kotlinc *.kt -include-runtime -d test.jar && java -jar test.jar
+Created 5 functions for 5 differnent problems.
 ```
 
 ### Swift
 
 ```
-swiftc -o main exercises.swift main.swift && ./main
+Created 5 functions for 5 differnent problems.
 ```
 
 ### TypeScript
