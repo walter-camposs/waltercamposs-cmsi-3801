@@ -33,19 +33,19 @@ Created 5 functions for 5 differnent problems.
 ### TypeScript
 
 ```
-npm test
+Created 5 functions for 5 differnent problems.
 ```
 
 ### OCaml
 
 ```
-ocamlc exercises.ml exercises_test.ml && ./a.out
+Created 5 functions for 5 differnent problems.
 ```
 
 ### Haskell
 
 ```
-ghc ExercisesTest.hs && ./ExercisesTest
+Created 5 functions for 5 differnent problems.
 ```
 
 ### C
