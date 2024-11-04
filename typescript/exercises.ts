@@ -1,6 +1,4 @@
 import { open } from "node:fs/promises"
-import * as readline from "readline"
-import { createReadStream } from "fs"
 
 export function change(amount: bigint): Map<bigint, bigint> {
   if (amount < 0) {
@@ -41,20 +39,12 @@ export function* powersGenerator(
 export async function meaningfulLineCount(filePath: string): Promise<number> {
   let validLineCount = 0
 
-  const fileStream = createReadStream(filePath)
-  const rl = readline.createInterface({
-    input: fileStream,
-    crlfDelay: Infinity,
-  })
-
-  for await (const line of rl) {
-    const trimmedLine = line.trim()
-    if (trimmedLine && !trimmedLine.startsWith("#")) {
+  const fileHandle = await open(filePath, "r")
+  for await (const line of fileHandle.readLines()) {
+    if (line.trim() && !line.trim().startsWith("#")) {
       validLineCount++
     }
   }
-
-  rl.close()
   return validLineCount
 }
 
@@ -95,4 +85,80 @@ export function volume(shape: Shape): number {
   }
 }
 
-// Write your binary search tree implementation here
+export interface BinarySearchTree<T> {
+  size(): number
+  insert(value: T): BinarySearchTree<T>
+  contains(value: T): boolean
+  inorder(): Iterable<T>
+  toString(): string
+}
+
+export class Empty<T> implements BinarySearchTree<T> {
+  size(): number {
+    return 0
+  }
+
+  insert(value: T): BinarySearchTree<T> {
+    return new Node<T>(value, new Empty(), new Empty())
+  }
+
+  contains(value: T): boolean {
+    return false
+  }
+
+  *inorder(): Iterable<T> {}
+
+  toString(): string {
+    return "()"
+  }
+}
+
+class Node<T> implements BinarySearchTree<T> {
+  private value: T
+  private left: BinarySearchTree<T>
+  private right: BinarySearchTree<T>
+  private treeSize: number
+
+  constructor(value: T, left: BinarySearchTree<T>, right: BinarySearchTree<T>) {
+    this.left = left
+    this.right = right
+    this.value = value
+    this.treeSize = 1 + left.size() + right.size()
+  }
+
+  size(): number {
+    return this.treeSize
+  }
+
+  insert(value: T): BinarySearchTree<T> {
+    if (value < this.value) {
+      return new Node(this.value, this.left.insert(value), this.right)
+    } else if (value > this.value) {
+      return new Node(this.value, this.left, this.right.insert(value))
+    } else {
+      return this
+    }
+  }
+
+  contains(value: T): boolean {
+    if (value < this.value) {
+      return this.left.contains(value)
+    } else if (value > this.value) {
+      return this.right.contains(value)
+    } else {
+      return true
+    }
+  }
+
+  *inorder(): Iterable<T> {
+    yield* this.left.inorder()
+    yield this.value
+    yield* this.right.inorder()
+  }
+
+  toString(): string {
+    return `(${this.left.toString().replace("()", "")}${this.value}${this.right
+      .toString()
+      .replace("()", "")})`
+  }
+}
