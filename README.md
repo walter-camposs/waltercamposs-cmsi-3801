@@ -51,23 +51,23 @@ Created 5 functions for 5 differnent problems.
 ### C
 
 ```
-gcc string_stack.c string_stack_test.c && ./a.out
+Completed a given stack specification in string_stach.h
 ```
 
 ### C++
 
 ```
-g++ -std=c++20 stack_test.cpp && ./a.out
+Completed a generic stack.
 ```
 
 ### Rust
 
 ```
-cargo test
+Completed a stack type that is a trivial wrapper around the Rust generic Vec type.
 ```
 
 ### Go
 
 ```
-go run restaurant.go
+Implemented the given simulation into go.
 ```
